@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.mario.movilred.conciliation.exception.ConciliationFileException;
 import com.mario.movilred.conciliation.model.ConciliationFileDetail;
 import com.mario.movilred.conciliation.processor.ConciliateFileProcessor;
 import com.mario.movilred.conciliation.processor.ConvertFileProcessor;
+import com.mario.movilred.conciliation.processor.ExceptionHandlerProcessor;
 import com.mario.movilred.conciliation.processor.SaveFileProcessor;
 
 @Component
@@ -72,6 +74,9 @@ public class FtpDownloadRouteBuilder extends RouteBuilder {
   
   @Autowired
   private ConciliateFileProcessor conciliateFileProcessor;
+  
+  @Autowired
+  private ExceptionHandlerProcessor exceptionHandlerProcessor;
 
   @PostConstruct
   public void postConstruct() {
@@ -94,11 +99,11 @@ public class FtpDownloadRouteBuilder extends RouteBuilder {
     getContext().getShutdownStrategy().setTimeout(10);
 
     // to handle any IOException being thrown
-    onException(Exception.class)
+    onException(ConciliationFileException.class)
         .handled(true)
         .log("Exception occurred due: ${exception.message}")
         .transform().simple("Error ${exception.message}")
-        .to("mock:error");
+        .process(exceptionHandlerProcessor);
     
     from(ftpUrl + cronExpression)
       .log("Start processing file ${file:name}.")
