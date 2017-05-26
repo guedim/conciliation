@@ -5,7 +5,9 @@ import java.util.logging.Logger;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ExceptionHandlerProcessor implements Processor  {
 
   /** The logger class **/
@@ -13,8 +15,14 @@ public class ExceptionHandlerProcessor implements Processor  {
 
   @Override
   public void process(Exchange exchange) throws Exception {
-    String body = exchange.getIn().toString();
-    LOGGER.log(Level.SEVERE, "Error processing file:" + body);
+    
+    StringBuilder message = new StringBuilder("Error processing conciliation file. ")
+          .append(" Endpoint:" + exchange.getFromEndpoint())
+          .append(" Exchage:" + exchange)
+          .append(" Body:" + exchange.getIn().getBody());
+    
+    LOGGER.log(Level.SEVERE, message.toString());
+    //TODO: Enviar un correo electrónico
   }
 
 }

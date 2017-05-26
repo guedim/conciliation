@@ -28,6 +28,7 @@ public class ConvertFileProcessor implements Processor {
       LOGGER.log(Level.INFO, "converted file with {0} records", records.size());
     } catch (Exception e) {
       LOGGER.log(Level.SEVERE, "Could not process conciliation file");
+      // TODO:  quitar try - catch para que se maneje por exceptionHandler
     }
   }
 }

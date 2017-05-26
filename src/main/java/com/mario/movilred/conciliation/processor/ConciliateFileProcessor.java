@@ -16,5 +16,6 @@ public class ConciliateFileProcessor implements Processor{
   public void process(Exchange exchange) throws Exception {
     List<ConciliationFile> records = exchange.getIn().getBody(List.class);
     System.err.println("IN processor: " + records);
+    //TODO: lógica para conciliar el archivo de Movilred
   }
 }

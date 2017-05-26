@@ -4,13 +4,11 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.BindyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.mario.movilred.conciliation.exception.ConciliationFileException;
 import com.mario.movilred.conciliation.model.ConciliationFileDetail;
 import com.mario.movilred.conciliation.processor.ConciliateFileProcessor;
 import com.mario.movilred.conciliation.processor.ConvertFileProcessor;
@@ -18,45 +16,17 @@ import com.mario.movilred.conciliation.processor.ExceptionHandlerProcessor;
 import com.mario.movilred.conciliation.processor.SaveFileProcessor;
 
 @Component
-public class FtpDownloadRouteBuilder extends RouteBuilder {
+public class FtpDownloadRouteBuilder extends AbstractFtpRouteBuilder {
   
   /** The logger class **/
   private final static Logger LOGGER = Logger.getLogger(FtpDownloadRouteBuilder.class.getName());
-  
-
-  @Value("${protocol}")
-  private String protocol;
-
-  @Value("${server}")
-  private String server;
-
-  @Value("${port}")
-  private String port;
-
+    
   @Value("${donwloadfolder:download}")
   private String downloadFolder;
-
-  @Value("${uploadfolder:upload}")
-  private String uploadFolder;
-
-  @Value("${user}")
-  private String user;
-
-  @Value("${password}")
-  private String password;
-
-  @Value("${prefixUploadFileName:movilred}")
-  private String prefixUploadFileName;
 
   @Value("${prefixDownloadFileName:movilred}")
   private String prefixDownloadFileName;
 
-  @Value("${stepwise:false}")
-  private String stepwise;
-
-  @Value("${useList:false}")
-  private String useList;
-  
   @Value("${cron.movilred.downloadfile}")
   private String cronDownloadFile;
 
@@ -81,13 +51,13 @@ public class FtpDownloadRouteBuilder extends RouteBuilder {
   @PostConstruct
   public void postConstruct() {
     StringBuilder ftpBuilder = new StringBuilder(protocol + "://")
-        .append(server + ":" + port + "/" + uploadFolder).append("?username=" + user)
+        .append(server + ":" + port + "/" + downloadFolder).append("?username=" + user)
         .append("&password=" + password).append("&fileName=" + prefixDownloadFileName + ".txt")
         .append("&stepwise=" + stepwise).append("&stepwise=" + useList);
-    ftpUrl = ftpBuilder.toString();
+    ftpUrl = ftpBuilder.toString() + fileExceptionConfiguration;
     LOGGER.info("In postConstruct() - The ftp download url:" + ftpUrl);
     
-    cronExpression = "&scheduler=quartz2&scheduler.cron="+cronDownloadFile;
+    cronExpression = cronConfiguration + cronDownloadFile;
     LOGGER.info("In postConstruct() - The download cron expression: " + cronExpression);
   }
 
@@ -99,13 +69,14 @@ public class FtpDownloadRouteBuilder extends RouteBuilder {
     getContext().getShutdownStrategy().setTimeout(10);
 
     // to handle any IOException being thrown
-    onException(ConciliationFileException.class)
+    onException(Exception.class)
         .handled(true)
         .log("Exception occurred due: ${exception.message}")
         .transform().simple("Error ${exception.message}")
         .process(exceptionHandlerProcessor);
     
     from(ftpUrl + cronExpression)
+      .id("download-file")
       .log("Start processing file ${file:name}.")
       .process(saveFileProcessor)
       .unmarshal().bindy(BindyType.Fixed, ConciliationFileDetail.class)
