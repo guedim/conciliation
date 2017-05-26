@@ -32,7 +32,7 @@ public class AbstractFtpRouteBuilder extends RouteBuilder {
 
   @Override
   public void configure() throws Exception {
-    // TODO Auto-generated method stub
+    // The children class implement this method
   }
 
 }

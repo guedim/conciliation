@@ -76,7 +76,6 @@ public class FtpDownloadRouteBuilder extends AbstractFtpRouteBuilder {
         .process(exceptionHandlerProcessor);
     
     from(ftpUrl + cronExpression)
-      .id("download-file")
       .log("Start processing file ${file:name}.")
       .process(saveFileProcessor)
       .unmarshal().bindy(BindyType.Fixed, ConciliationFileDetail.class)

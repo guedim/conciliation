@@ -23,12 +23,8 @@ public class ConvertFileProcessor implements Processor {
   public void process(Exchange exchange) throws Exception {
 
     Message in = exchange.getIn();
-    try {
-      List<ConciliationFileDetail> records = (List<ConciliationFileDetail>) in.getBody();
-      LOGGER.log(Level.INFO, "converted file with {0} records", records.size());
-    } catch (Exception e) {
-      LOGGER.log(Level.SEVERE, "Could not process conciliation file");
-      // TODO:  quitar try - catch para que se maneje por exceptionHandler
-    }
+    List<ConciliationFileDetail> records = (List<ConciliationFileDetail>) in.getBody();
+    LOGGER.log(Level.INFO, "converted file with {0} records", records.size());
+
   }
 }
