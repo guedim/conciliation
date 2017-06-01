@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.mario.movilred.conciliation;
 
 import org.springframework.boot.SpringApplication;
@@ -11,8 +14,11 @@ import org.springframework.context.annotation.PropertySource;
 //@EnableAutoConfiguration(exclude={CassandraDataAutoConfiguration.class})
 public class ConciliationApplication {
 
-  
-  public static void main(String[] args) {
+  /**
+   * 
+   * @param args
+   */
+  public static void main(final String[] args) {
     SpringApplication.run(ConciliationApplication.class, args);
   }
 }
