@@ -74,7 +74,7 @@ public class FtpDownloadRouteBuilder extends AbstractFtpRouteBuilder {
         .log("Exception occurred due: ${exception.message}")
         .transform().simple("Error ${exception.message}")
         .process(exceptionHandlerProcessor).setHeader("subject").constant("Ejemplo de correo")
-        .to("smtps://smtp@gmail.com:587?username=guedim@gmail.com&password=i8gqj5wt...&to=guedim@gmail.com");
+        .to("smtps://smtp@gmail.com:587?username=guedim@gmail.com&password=test...&to=guedim@gmail.com"); 
     
     from(ftpUrl + cronExpression)
       .log("Start processing file ${file:name}.")
