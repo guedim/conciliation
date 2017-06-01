@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource({
   "classpath:application.properties",
   "classpath:ftp.properties" })
+//@EnableAutoConfiguration(exclude={CassandraDataAutoConfiguration.class})
 public class ConciliationApplication {
 
   public static void main(String[] args) {
