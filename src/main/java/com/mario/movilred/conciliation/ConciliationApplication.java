@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 //@EnableAutoConfiguration(exclude={CassandraDataAutoConfiguration.class})
 public class ConciliationApplication {
 
+  
   public static void main(String[] args) {
     SpringApplication.run(ConciliationApplication.class, args);
   }
