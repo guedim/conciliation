@@ -14,6 +14,10 @@ import org.springframework.context.annotation.PropertySource;
 //@EnableAutoConfiguration(exclude={CassandraDataAutoConfiguration.class})
 public class ConciliationApplication {
 
+  
+  
+  
+  
   /**
    * 
    * @param args
