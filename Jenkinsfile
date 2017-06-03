@@ -1,26 +1,16 @@
 pipeline {
   agent any
   stages {
-    stage('test') {
+    stage('ejemplo') {
       steps {
-        echo 'Hello World mundo'
+        echo 'Hello  mundo 1'
+        echo 'Hello  mundo 2'
       }
     }
-    stage('paso') {
-      steps {
-        echo 'saludo hola mundo'
-      }
-    }
-  }
-  environment {
-    defenition = '123'
-    istru = 'false'
   }
   post {
     always {
-      echo 'I will always say Hello again!'
-      
+      echo 'I will always say Hello again!'    
     }
-    
   }
 }
