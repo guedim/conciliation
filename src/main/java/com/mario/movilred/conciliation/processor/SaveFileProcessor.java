@@ -16,13 +16,13 @@ public class SaveFileProcessor implements Processor  {
   private final static Logger LOGGER = Logger.getLogger(SaveFileProcessor.class.getName());
   
   @Autowired
-  private ConciliationFileDao service;
+  private ConciliationFileDao dao;
   
   @Override
   public void process(Exchange exchange) throws Exception {
     String fileContent = exchange.getIn().getBody(String.class);
     LOGGER.info("processing conciliation file with content: " + fileContent);
-    service.save(fileContent);
+    dao.save(fileContent);
   }
 
 }
