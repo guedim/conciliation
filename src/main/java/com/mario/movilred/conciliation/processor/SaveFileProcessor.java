@@ -24,5 +24,4 @@ public class SaveFileProcessor implements Processor  {
     LOGGER.info("processing conciliation file with content: " + fileContent);
     dao.save(fileContent);
   }
-
 }
