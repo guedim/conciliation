@@ -4,8 +4,13 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.camel.model.dataformat.BindyType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.mario.movilred.conciliation.model.PaymentRequest;
+import com.mario.movilred.conciliation.processor.ReadPaymentRequestProcessor;
 
 @Component
 public class FtpUploadRouteBuilder extends AbstractFtpRouteBuilder {
@@ -21,12 +26,12 @@ public class FtpUploadRouteBuilder extends AbstractFtpRouteBuilder {
   
   @Value("${cron.movilred.uploadfile}")
   private String cronUploadFile;
+
+  @Autowired
+  private ReadPaymentRequestProcessor readPaymentRequestProcessor;
   
   /** The ftp url and parameters */
   private String ftpUrl;
-  
-  /** The cron expression */
-  private String cronExpression;
   
   @PostConstruct
   public void postConstruct() {
@@ -36,9 +41,6 @@ public class FtpUploadRouteBuilder extends AbstractFtpRouteBuilder {
         .append("&stepwise=" + stepwise).append("&stepwise=" + useList);
     ftpUrl = ftpBuilder.toString() + fileExceptionConfiguration;
     LOGGER.info("In postConstruct() - The ftp upload url:" + ftpUrl);
-    
-    cronExpression = cronConfiguration + cronUploadFile;
-    LOGGER.info("In postConstruct() - The upload cron expression: " + cronExpression);
   }
 
 
@@ -52,17 +54,17 @@ public class FtpUploadRouteBuilder extends AbstractFtpRouteBuilder {
     onException(Exception.class)
         .handled(true)
         .log("Exception occurred due: ${exception.message}")
-        .transform().simple("Error ${exception.message}")
-        .process(exceptionHandlerProcessor); 
+        .transform().simple("Error ${exception.message}");
+        //.process(exceptionHandlerProcessor); 
     
     
-    
-    
-    from("quartz2://myGroup/myTimerName?cron=" + cronUploadFile)//.to("activemq:Totally.Rocks");
-      .log("corrio el cron :)");
-    
-    
-    //from("file://D:\\test.txt").to(ftpUrl + cronExpression).log("Uploaded file ${file:name} complete.");
+    from("quartz2://myGroup/myTimerName?cron=" + cronUploadFile)
+      .log("Start processing file ${file:name}.")
+      .process(readPaymentRequestProcessor)
+      .marshal().bindy(BindyType.Fixed, PaymentRequest.class)
+      .process(saveFileProcessor)
+      .to(ftpUrl)
+      .log("Uploaded file ${file:name} complete.");    
   }
  
 }

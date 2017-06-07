@@ -7,12 +7,10 @@ import javax.annotation.PostConstruct;
 import org.apache.camel.model.dataformat.BindyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.mario.movilred.conciliation.model.ConciliationFileDetail;
 import com.mario.movilred.conciliation.processor.ConciliateFileProcessor;
 import com.mario.movilred.conciliation.processor.ConvertFileProcessor;
-import com.mario.movilred.conciliation.processor.SaveFileProcessor;
 
 //@Component
 public class FtpDownloadRouteBuilder extends AbstractFtpRouteBuilder {
@@ -37,9 +35,6 @@ public class FtpDownloadRouteBuilder extends AbstractFtpRouteBuilder {
   
   @Autowired
   private ConvertFileProcessor convertFileProcessor;
-  
-  @Autowired
-  private SaveFileProcessor saveFileProcessor;
   
   @Autowired
   private ConciliateFileProcessor conciliateFileProcessor;

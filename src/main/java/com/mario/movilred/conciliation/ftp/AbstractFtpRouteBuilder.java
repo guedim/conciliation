@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.mario.movilred.conciliation.processor.ExceptionHandlerProcessor;
+import com.mario.movilred.conciliation.processor.SaveFileProcessor;
 
 public class AbstractFtpRouteBuilder extends RouteBuilder {
 
@@ -32,6 +33,9 @@ public class AbstractFtpRouteBuilder extends RouteBuilder {
 
   @Value("${useList:false}")
   protected String useList;
+  
+  @Autowired
+  protected SaveFileProcessor saveFileProcessor;
   
   @Autowired
   protected ExceptionHandlerProcessor exceptionHandlerProcessor;
