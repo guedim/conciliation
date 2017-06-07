@@ -12,10 +12,9 @@ import org.springframework.stereotype.Component;
 import com.mario.movilred.conciliation.model.ConciliationFileDetail;
 import com.mario.movilred.conciliation.processor.ConciliateFileProcessor;
 import com.mario.movilred.conciliation.processor.ConvertFileProcessor;
-import com.mario.movilred.conciliation.processor.ExceptionHandlerProcessor;
 import com.mario.movilred.conciliation.processor.SaveFileProcessor;
 
-@Component
+//@Component
 public class FtpDownloadRouteBuilder extends AbstractFtpRouteBuilder {
   
   /** The logger class **/
@@ -45,9 +44,6 @@ public class FtpDownloadRouteBuilder extends AbstractFtpRouteBuilder {
   @Autowired
   private ConciliateFileProcessor conciliateFileProcessor;
   
-  @Autowired
-  private ExceptionHandlerProcessor exceptionHandlerProcessor;
-
   @PostConstruct
   public void postConstruct() {
     StringBuilder ftpBuilder = new StringBuilder(protocol + "://")
@@ -73,7 +69,7 @@ public class FtpDownloadRouteBuilder extends AbstractFtpRouteBuilder {
         .handled(true)
         .log("Exception occurred due: ${exception.message}")
         .transform().simple("Error ${exception.message}")
-        .process(exceptionHandlerProcessor).setHeader("subject").constant("Ejemplo de correo"); 
+        .process(exceptionHandlerProcessor); 
     
     from(ftpUrl + cronExpression)
       .log("Start processing file ${file:name}.")

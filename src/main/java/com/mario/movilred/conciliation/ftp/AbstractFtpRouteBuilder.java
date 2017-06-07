@@ -1,7 +1,10 @@
 package com.mario.movilred.conciliation.ftp;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
+import com.mario.movilred.conciliation.processor.ExceptionHandlerProcessor;
 
 public class AbstractFtpRouteBuilder extends RouteBuilder {
 
@@ -29,6 +32,10 @@ public class AbstractFtpRouteBuilder extends RouteBuilder {
 
   @Value("${useList:false}")
   protected String useList;
+  
+  @Autowired
+  protected ExceptionHandlerProcessor exceptionHandlerProcessor;
+
 
   @Override
   public void configure() throws Exception {
