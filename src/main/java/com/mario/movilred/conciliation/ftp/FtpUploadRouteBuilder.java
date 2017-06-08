@@ -7,12 +7,11 @@ import javax.annotation.PostConstruct;
 import org.apache.camel.model.dataformat.BindyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.mario.movilred.conciliation.model.PaymentRequest;
 import com.mario.movilred.conciliation.processor.ReadPaymentRequestProcessor;
 
-@Component
+//@Component
 public class FtpUploadRouteBuilder extends AbstractFtpRouteBuilder {
   
   /** The logger class **/
@@ -54,8 +53,8 @@ public class FtpUploadRouteBuilder extends AbstractFtpRouteBuilder {
     onException(Exception.class)
         .handled(true)
         .log("Exception occurred due: ${exception.message}")
-        .transform().simple("Error ${exception.message}");
-        //.process(exceptionHandlerProcessor); 
+        .transform().simple("Error ${exception.message}")
+        .process(exceptionHandlerProcessor); 
     
     
     from("quartz2://myGroup/myTimerName?cron=" + cronUploadFile)

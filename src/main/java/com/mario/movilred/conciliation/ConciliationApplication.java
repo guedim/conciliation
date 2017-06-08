@@ -10,12 +10,11 @@ import org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoCo
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource({
-  "classpath:application.properties",
-  "classpath:ftp.properties" })
-@EnableAutoConfiguration(exclude={CassandraDataAutoConfiguration.class})
-public class ConciliationApplication {  
-  
+@PropertySource({"classpath:application.properties", "classpath:ftp.properties"})
+@EnableAutoConfiguration(exclude = {CassandraDataAutoConfiguration.class
+})
+public class ConciliationApplication {
+
   /**
    * 
    * @param args

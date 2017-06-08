@@ -24,7 +24,6 @@ public class ReadPaymentRequestProcessor implements Processor {
   @Autowired
   PaymentRequestRespository repository;
   
-  
   @Override
   public void process(Exchange exchange) throws Exception {
     
