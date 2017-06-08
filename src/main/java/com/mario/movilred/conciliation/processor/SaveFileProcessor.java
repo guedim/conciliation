@@ -7,7 +7,7 @@ import org.apache.camel.Processor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mario.movilred.conciliation.repository.ConciliationFileDao;
+import com.mario.movilred.conciliation.repository.ConciliationFileRepository;
 
 @Component
 public class SaveFileProcessor implements Processor  {
@@ -16,12 +16,12 @@ public class SaveFileProcessor implements Processor  {
   private final static Logger LOGGER = Logger.getLogger(SaveFileProcessor.class.getName());
   
   @Autowired
-  private ConciliationFileDao dao;
+  private ConciliationFileRepository repository;
   
   @Override
   public void process(Exchange exchange) throws Exception {
     String fileContent = exchange.getIn().getBody(String.class);
     LOGGER.info("processing conciliation file with content: " + fileContent);
-    dao.save(fileContent);
+    repository.save(fileContent);
   }
 }

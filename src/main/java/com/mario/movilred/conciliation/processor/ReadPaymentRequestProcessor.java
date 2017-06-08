@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mario.movilred.conciliation.model.PaymentRequest;
-import com.mario.movilred.conciliation.repository.PaymentRequestRespository;
+import com.mario.movilred.conciliation.repository.PaymentRequestRepository;
 import com.mario.movilred.conciliation.utils.DateUtils;
 
 @Component
@@ -20,9 +20,8 @@ public class ReadPaymentRequestProcessor implements Processor {
   /** The logger class **/
   private final static Logger LOGGER = Logger.getLogger(ReadPaymentRequestProcessor.class.getName());
 
-  
   @Autowired
-  PaymentRequestRespository repository;
+  PaymentRequestRepository repository;
   
   @Override
   public void process(Exchange exchange) throws Exception {
@@ -31,7 +30,8 @@ public class ReadPaymentRequestProcessor implements Processor {
     Date endDate = DateUtils.getEndOfDay(new Date());
     LOGGER.log(Level.INFO,  String.format("Processing payment request bewtween {0} and {1} ",  String.valueOf(startDate), String.valueOf(endDate)));
     
-    List<PaymentRequest> prs = repository.findByDatesReturnStream(startDate, endDate);
+    List<PaymentRequest> prs = repository.findByDates(startDate, endDate);
+    //TODO: Es necesario procesar los registros que se van a publicar en el ftp
     for (PaymentRequest paymentRequest : prs) {
       System.out.println(paymentRequest);
     }

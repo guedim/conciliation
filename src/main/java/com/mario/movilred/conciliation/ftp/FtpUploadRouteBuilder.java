@@ -7,11 +7,12 @@ import javax.annotation.PostConstruct;
 import org.apache.camel.model.dataformat.BindyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.mario.movilred.conciliation.model.PaymentRequest;
 import com.mario.movilred.conciliation.processor.ReadPaymentRequestProcessor;
 
-//@Component
+@Component
 public class FtpUploadRouteBuilder extends AbstractFtpRouteBuilder {
   
   /** The logger class **/

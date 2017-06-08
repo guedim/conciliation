@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 import org.apache.camel.dataformat.bindy.annotation.FixedLengthRecord;
 
-@Entity
+@Entity(name="payment_request")
 @FixedLengthRecord(crlf = "WINDOWS", skipHeader = true, skipFooter = true, length = 54)
 public class PaymentRequest {
 
@@ -29,6 +29,18 @@ public class PaymentRequest {
   @Column(name = "value", precision = 10, scale = 2, nullable = false)
   @DataField(pos = 160, length = 10, precision=2)
   private BigDecimal value;
+
+  public PaymentRequest(){
+    
+  }
+  
+  public PaymentRequest(String id, Date creationDate, String reference, BigDecimal value) {
+    super();
+    this.id = id;
+    this.creationDate = creationDate;
+    this.reference = reference;
+    this.value = value;
+  }
 
   public String getId() {
     return id;
