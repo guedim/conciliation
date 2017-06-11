@@ -18,10 +18,10 @@ public class FtpUploadRouteBuilder extends AbstractFtpRouteBuilder {
   /** The logger class **/
   private final static Logger LOGGER = Logger.getLogger(FtpUploadRouteBuilder.class.getName());
 
-  @Value("${uploadfolder:upload}")
+  @Value("${movilred.ftp.uploadfolder:upload}")
   private String uploadFolder;
 
-  @Value("${prefixUploadFileName:movilred}")
+  @Value("${movilred.ftp.prefixUploadFileName:movilred}")
   private String prefixUploadFileName;
   
   @Value("${cron.movilred.uploadfile}")

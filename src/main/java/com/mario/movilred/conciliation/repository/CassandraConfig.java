@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.config.SchemaAction;
@@ -18,7 +17,6 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 
 @ConditionalOnProperty(name="cassandra.is.enabled", havingValue="true")
 @Configuration
-@PropertySource(value = { "classpath:application.properties" })
 @EnableCassandraRepositories(basePackages = { "com.mario.movilred.conciliation.model" })
 public class CassandraConfig {
 

@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource({"classpath:application.properties", "classpath:ftp.properties"})
+@PropertySource({"classpath:application.yaml"})
 @EnableAutoConfiguration(exclude = {CassandraDataAutoConfiguration.class,
     DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class,
     HibernateJpaAutoConfiguration.class

@@ -1,0 +1,135 @@
+##
+# MOVILRED ADAPTER CONFIGURATION
+##
+movilred:
+  base:
+    path: http://localhost:8080/GetraxPublicServices/rest
+  ftp:
+    protocol: ftp
+    server: localhost
+    port: 21
+    downloadFolder: download
+    uploadFolder: upload
+    user: test
+    password: 12345678
+    prefixUploadFileName: movilred
+    prefixDownloadFileName: movilred
+    stepwise: false
+    useList: false
+
+##
+# LOGGING CONFIGURATION
+##
+logging:
+  level:
+    root: info
+    com.smart.routing.adapters.movilred: info
+
+
+##
+# SPRING BOOT APP CONFIGURATION
+##
+server:
+  port: 9000
+  servlet-path: /actuator
+endpoints:
+  actuator:
+    path: actuator
+  enabled: true
+  sensitive: true
+  health:
+    enabled: true
+    sensitive: false
+  info:
+    enabled: true
+    sensitive: false
+
+management:
+  context-path: /
+  health:
+    defaults.enabled: false
+
+info:
+  application: Smart Routing
+  adapter: MovilRed
+  environment: Local
+  
+  
+  
+##
+# MOVILRED DOWNLOAD/UPLOAD CONCILIATION FILES
+##
+cron:
+  movilred:
+    downloadfile: 0/60+*+*+*+*+?
+    uploadfile: 0/10+*+*+*+*+?
+  
+##
+# MOVILRED - TEMPORAL CONFIGURATION -  DELETEEEEEEEEEEEEE
+##
+cassandra:
+  is.enabled: true
+email:
+  to.notify.error: integrations@minka.io
+postgres:
+  is.enabled: true
+  
+  
+##
+# MOVILRED - CASSANDRA CONFIGURATION
+##
+spring:
+  data:
+    cassandra:
+      contactpoints: localhost,127.0.0.1
+      port: 9042
+      keyspace-name: movilred
+
+##
+# MOVILRED  - EMAIL ERROR/EXCEPTION NOTIFICATIONS
+##
+#spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: guedim@gmail.com
+    password: i8gqj5wt
+    properties.mail.smtp: 
+      starttls.enable: true
+      starttls.required: true
+      auth: true
+      connectiontimeout: 10000
+      timeout: 10000
+      writetimeout: 10000
+      
+ 
+##
+# REPORT (postgres) DATABASE CONFIGURATION
+##
+#spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/payment_engine
+    driverClassName: org.postgresql.Driver
+    schema: public
+    username: postgres
+    password: postgres
+    hikari.connection-timeout: 10000
+    hikari.maximum-pool-size: 5
+    poolName: ConciliationHikariCP
+    maximumPoolSize: 5
+    minimumIdle: 3
+    maxLifetime: 2000000
+    connectionTimeout: 30000
+    idleTimeout: 30000
+    pool-prepared-statements: true
+    max-open-prepared-statements: 250    
+  jpa:
+    databasePlatform: org.hibernate.dialect.PostgreSQL94Dialect
+    show-sql: true
+    format_sql: true
+    generate-ddl: true
+    default_schema: public
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL94Dialect   

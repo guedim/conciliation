@@ -13,25 +13,25 @@ public class AbstractFtpRouteBuilder extends RouteBuilder {
   
   protected String cronConfiguration = "&scheduler=quartz2&scheduler.cron=";
   
-  @Value("${protocol}")
+  @Value("${movilred.ftp.protocol}")
   protected String protocol;
 
-  @Value("${server}")
+  @Value("${movilred.ftp.server}")
   protected String server;
 
-  @Value("${port}")
+  @Value("${movilred.ftp.port}")
   protected String port;
 
-  @Value("${user}")
+  @Value("${movilred.ftp.user}")
   protected String user;
 
-  @Value("${password}")
+  @Value("${movilred.ftp.password}")
   protected String password;
 
-  @Value("${stepwise:false}")
+  @Value("${movilred.ftp.stepwise:false}")
   protected String stepwise;
 
-  @Value("${useList:false}")
+  @Value("${movilred.ftp.useList:false}")
   protected String useList;
   
   @Autowired
