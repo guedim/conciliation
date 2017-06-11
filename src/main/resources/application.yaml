@@ -93,7 +93,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: guedim@gmail.com
-    password: i8gqj5wt
+    password: password_va_aca
     properties.mail.smtp: 
       starttls.enable: true
       starttls.required: true
