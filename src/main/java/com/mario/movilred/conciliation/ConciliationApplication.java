@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.PropertySource;
 
-
 @SpringBootApplication
 @PropertySource({"classpath:application.yaml"})
 @EnableAutoConfiguration(exclude = {CassandraDataAutoConfiguration.class,
