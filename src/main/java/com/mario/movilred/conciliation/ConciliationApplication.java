@@ -25,6 +25,8 @@ public class ConciliationApplication {
    * @param args
    */
   public static void main(final String[] args) {
+    
     SpringApplication.run(ConciliationApplication.class, args);
+    
   }
 }
